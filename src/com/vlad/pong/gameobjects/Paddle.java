@@ -26,6 +26,16 @@ public class Paddle implements Drawable {
 
     @Override
     public void draw(Graphics graphics) {
-      graphics.fill(new Rectangle(position.getDeltaX(), position.getDeltaY(), size.getWidth(), size.getHeight()));
+        graphics.fill(new Rectangle(position.getDeltaX(), position.getDeltaY(), size.getWidth(), size.getHeight()));
+    }
+
+    public void moveLeft() {
+        int oldPosition = this.getPosition().getDeltaX();
+        this.getPosition().setDeltaX(oldPosition - 5);
+    }
+
+    public void moveRight() {
+        int oldPosition = this.getPosition().getDeltaX();
+        this.getPosition().setDeltaX(oldPosition + 5);
     }
 }

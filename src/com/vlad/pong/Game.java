@@ -1,20 +1,48 @@
 package com.vlad.pong;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Collections;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import com.vlad.pong.gameobjects.Field;
 import com.vlad.pong.gameobjects.Paddle;
+import com.vlad.pong.gameobjects.Player;
 import com.vlad.pong.geometry.Position;
 import com.vlad.pong.geometry.Size;
+import com.vlad.pong.input.Keymap;
+import com.vlad.pong.input.LeftPaddleCommand;
+import com.vlad.pong.input.PaddleCommand;
+import com.vlad.pong.input.PaddleKeyListener;
+import com.vlad.pong.input.RightPaddleCommand;
 
 public class Game extends BasicGame {
 
 
   private static final Size PADDLE_SIZE = new Size(150, 25);
+
+  private static final Map<Integer, PaddleCommand> wasdMap;
+  static {
+    Map<Integer, PaddleCommand> temp = new HashMap<Integer, PaddleCommand>();
+    temp.put(Input.KEY_A, new LeftPaddleCommand());
+    temp.put(Input.KEY_D, new RightPaddleCommand());
+    wasdMap = Collections.unmodifiableMap(temp);
+  }
+
+  private static final Map<Integer, PaddleCommand> arrowMap;
+  static {
+    Map<Integer, PaddleCommand> temp = new HashMap<Integer, PaddleCommand>();
+    temp.put(Input.KEY_LEFT, new LeftPaddleCommand());
+    temp.put(Input.KEY_RIGHT, new RightPaddleCommand());
+    arrowMap = Collections.unmodifiableMap(temp);
+  }
+
   private Paddle topPaddle;
   private Paddle bottomPaddle;
   private Field field;
@@ -37,6 +65,10 @@ public class Game extends BasicGame {
         this.topPaddle = new Paddle(new Position(0, 5), PADDLE_SIZE);
         this.bottomPaddle = new Paddle(new Position(0, container.getHeight() - PADDLE_SIZE.getHeight() - 5), PADDLE_SIZE);
         this.field = new Field(new Size(container.getWidth(), container.getHeight()));
+        container.getInput().enableKeyRepeat();
+        Player player1 = new Player(bottomPaddle, new Keymap(arrowMap));
+        Player player2 = new Player(topPaddle, new Keymap(wasdMap));
+        container.getInput().addKeyListener(new PaddleKeyListener(player1, player2));
     }
 
     @Override
