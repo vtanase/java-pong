@@ -4,16 +4,20 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.ShapeFill;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.geom.Rectangle;
 
-import sun.java2d.pipe.SolidTextRenderer;
+import com.vlad.pong.gameobjects.Field;
+import com.vlad.pong.gameobjects.Paddle;
+import com.vlad.pong.geometry.Position;
+import com.vlad.pong.geometry.Size;
 
 public class Game extends BasicGame {
-    
-    private static final int PADDLE_HEIGHT = 25;
+
+
+  private static final Size PADDLE_SIZE = new Size(150, 25);
+  private Paddle topPaddle;
+  private Paddle bottomPaddle;
+  private Field field;
 
     public Game(String gamename) {
         super(gamename);
@@ -21,21 +25,18 @@ public class Game extends BasicGame {
 
     @Override
     public void render(GameContainer container, Graphics graphics) throws SlickException {
-//        graphics.drawString("Hello world!", 10, 10);
+        // graphics.drawString("Hello world!", 10, 10);
         graphics.setColor(Color.white);
-        Rectangle middleLine = new Rectangle(0, container.getHeight()/2, container.getWidth(), 1);
-        graphics.fill(middleLine);
-        Circle middleCircle = new Circle(container.getWidth()/2, container.getHeight()/2, 100);
-        graphics.draw(middleCircle);
-        Rectangle topPaddle = new Rectangle(0, 5, 150, PADDLE_HEIGHT);
-        Rectangle bottomPaddle = new Rectangle(0, container.getHeight()-PADDLE_HEIGHT - 5, 150, PADDLE_HEIGHT);
-        graphics.fill(topPaddle);
-        graphics.fill(bottomPaddle);
-
+        field.draw(graphics);
+        topPaddle.draw(graphics);
+        bottomPaddle.draw(graphics);
     }
 
     @Override
-    public void init(GameContainer arg0) throws SlickException {
+    public void init(GameContainer container) throws SlickException {
+        this.topPaddle = new Paddle(new Position(0, 5), PADDLE_SIZE);
+        this.bottomPaddle = new Paddle(new Position(0, container.getHeight() - PADDLE_SIZE.getHeight() - 5), PADDLE_SIZE);
+        this.field = new Field(new Size(container.getWidth(), container.getHeight()));
     }
 
     @Override
