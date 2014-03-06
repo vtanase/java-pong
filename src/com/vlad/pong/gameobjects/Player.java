@@ -7,14 +7,12 @@ public class Player {
 
     private Paddle paddle;
     private Keymap keymap;
+    private Field field;
 
-    public Player(Paddle paddle, Keymap keymap) {
+    public Player(Paddle paddle, Field field, Keymap keymap) {
         this.paddle = paddle;
+        this.field = field;
         this.keymap = keymap;
-    }
-
-    public Paddle getPaddle() {
-        return this.paddle;
     }
 
     public Keymap getKeymap() {
@@ -24,7 +22,7 @@ public class Player {
     public void update(int key) {
         if (this.getKeymap().supports(key)) {
             PaddleCommand command = this.getKeymap().toCommand(key);
-            command.execute(this.getPaddle());
+            command.execute(this.paddle, this.field);
         }
     }
 

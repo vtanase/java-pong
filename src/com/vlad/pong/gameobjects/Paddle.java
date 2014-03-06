@@ -6,6 +6,9 @@ import org.newdawn.slick.geom.Rectangle;
 import com.vlad.pong.geometry.Position;
 import com.vlad.pong.geometry.Size;
 
+/**
+ * Class representing the paddle used by a player in the game.
+ */
 public class Paddle implements Drawable {
 
     private Position position;
@@ -29,13 +32,11 @@ public class Paddle implements Drawable {
         graphics.fill(new Rectangle(position.getDeltaX(), position.getDeltaY(), size.getWidth(), size.getHeight()));
     }
 
-    public void moveLeft() {
-        int oldPosition = this.getPosition().getDeltaX();
-        this.getPosition().setDeltaX(oldPosition - 5);
+    /**
+     * Moves the paddle to the specified position.
+     */
+    public void moveTo(Position position) {
+        this.position = position;
     }
 
-    public void moveRight() {
-        int oldPosition = this.getPosition().getDeltaX();
-        this.getPosition().setDeltaX(oldPosition + 5);
-    }
 }

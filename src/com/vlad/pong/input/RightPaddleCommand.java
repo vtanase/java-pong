@@ -1,12 +1,17 @@
 package com.vlad.pong.input;
 
+import com.vlad.pong.gameobjects.Field;
 import com.vlad.pong.gameobjects.Paddle;
+import com.vlad.pong.geometry.Position;
 
 public class RightPaddleCommand implements PaddleCommand {
 
     @Override
-    public void execute(Paddle paddle) {
-        paddle.moveRight();
+    public void execute(Paddle paddle, Field field) {
+      Position newPosition = paddle.getPosition().translateRight();
+      if (field.isValidPaddlePosition(newPosition)) {
+        paddle.moveTo(newPosition);
+      }
     }
 
 }
