@@ -45,6 +45,7 @@ public class Game extends BasicGame {
     private Paddle topPaddle;
     private Paddle bottomPaddle;
     private Field field;
+    private boolean shutdown = false;
 
     public Game(String gamename) {
         super(gamename);
@@ -68,11 +69,18 @@ public class Game extends BasicGame {
         container.getInput().enableKeyRepeat();
         Player player1 = new Player(bottomPaddle, field, new Keymap(arrowMap));
         Player player2 = new Player(topPaddle, field, new Keymap(wasdMap));
-        container.getInput().addKeyListener(new PaddleKeyListener(player1, player2));
+        container.getInput().addKeyListener(new PaddleKeyListener(this, player1, player2));
     }
 
     @Override
-    public void update(GameContainer arg0, int arg1) throws SlickException {
+    public void update(GameContainer container, int arg1) throws SlickException {
+        if (this.shutdown) {
+            container.exit();
+        }
+    }
+
+    public void shutdown() {
+        this.shutdown = true;
     }
 
 }
