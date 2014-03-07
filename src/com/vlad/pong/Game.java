@@ -1,8 +1,10 @@
 package com.vlad.pong;
 
+import static com.vlad.pong.gameobjects.ObjectSizes.PADDLE_SIZE;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Collections;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -11,6 +13,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import com.vlad.pong.gameobjects.Ball;
 import com.vlad.pong.gameobjects.Field;
 import com.vlad.pong.gameobjects.Paddle;
 import com.vlad.pong.gameobjects.Player;
@@ -21,8 +24,6 @@ import com.vlad.pong.input.LeftPaddleCommand;
 import com.vlad.pong.input.PaddleCommand;
 import com.vlad.pong.input.PaddleKeyListener;
 import com.vlad.pong.input.RightPaddleCommand;
-
-import static com.vlad.pong.gameobjects.ObjectSizes.PADDLE_SIZE;
 
 public class Game extends BasicGame {
 
@@ -45,6 +46,7 @@ public class Game extends BasicGame {
     private Paddle topPaddle;
     private Paddle bottomPaddle;
     private Field field;
+    private Ball ball;
     private boolean shutdown = false;
 
     public Game(String gamename) {
@@ -58,18 +60,24 @@ public class Game extends BasicGame {
         field.draw(graphics);
         topPaddle.draw(graphics);
         bottomPaddle.draw(graphics);
+        ball.draw(graphics);
     }
 
     @Override
     public void init(GameContainer container) throws SlickException {
+        // set the FPS
+        container.setTargetFrameRate(120);
+        // allow the player to hold down a key
+        container.getInput().enableKeyRepeat();
+
         this.topPaddle = new Paddle(new Position(0, 5), PADDLE_SIZE);
         this.bottomPaddle = new Paddle(new Position(0, container.getHeight() - PADDLE_SIZE.getHeight() - 5),
                 PADDLE_SIZE);
         this.field = new Field(new Size(container.getWidth(), container.getHeight()));
-        container.getInput().enableKeyRepeat();
         Player player1 = new Player(bottomPaddle, field, new Keymap(arrowMap));
         Player player2 = new Player(topPaddle, field, new Keymap(wasdMap));
         container.getInput().addKeyListener(new PaddleKeyListener(this, player1, player2));
+        this.ball = new Ball(new Position(container.getWidth() / 2, container.getHeight() / 2));
     }
 
     @Override
@@ -77,6 +85,7 @@ public class Game extends BasicGame {
         if (this.shutdown) {
             container.exit();
         }
+        this.ball.updatePosition();
     }
 
     public void shutdown() {
