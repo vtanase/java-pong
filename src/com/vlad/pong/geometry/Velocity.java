@@ -17,4 +17,12 @@ public class Velocity {
     public int onY() {
         return this.onY;
     }
+
+    public void reverseOnY() {
+        this.onY *= -1;
+    }
+
+    public void reverseOnX() {
+        this.onX *= -1;
+    }
 }

@@ -85,7 +85,20 @@ public class Game extends BasicGame {
         if (this.shutdown) {
             container.exit();
         }
-        this.ball.updatePosition();
+        Position newBallPosition = ball.getPosition().translate(ball.getVelocity());
+        ball.moveTo(newBallPosition);
+        if (ball.hitsBottom(field)) {
+          // score 1 for player 2
+        }
+        if (ball.hitsTop(field)) {
+          // score 1 for player 1
+        }
+        if (ball.hitsPaddle(bottomPaddle) || ball.hitsPaddle(topPaddle)) {
+          ball.bounceVertically();
+        }
+        if (ball.hitsSide(field)) {
+          ball.bounceHorizontally();
+        }
     }
 
     public void shutdown() {

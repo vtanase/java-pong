@@ -30,12 +30,17 @@ public class Position {
     }
 
     public Position translateLeft() {
-        Position result = new Position(this.deltaX - 5, deltaY);
+        Position result = new Position(this.deltaX - 15, deltaY);
         return result;
     }
 
     public Position translateRight() {
-        Position result = new Position(this.deltaX + 5, deltaY);
+        Position result = new Position(this.deltaX + 15, deltaY);
+        return result;
+    }
+
+    public Position translate(Velocity velocity) {
+        Position result = new Position(this.deltaX + velocity.onX(), deltaY + velocity.onY());
         return result;
     }
 }
