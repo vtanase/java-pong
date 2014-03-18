@@ -41,10 +41,18 @@ public class Ball implements Drawable {
     }
 
     public boolean hitsTop(Field field) {
+        int circleTopY = this.getPosition().getDeltaY() - RADIUS;
+        if (circleTopY <= 0) {
+            return true;
+        }
         return false;
     }
 
     public boolean hitsBottom(Field field) {
+        int circleBottomY = this.getPosition().getDeltaY() + RADIUS;
+        if (circleBottomY >= field.getHeight()) {
+            return true;
+        }
         return false;
     }
 

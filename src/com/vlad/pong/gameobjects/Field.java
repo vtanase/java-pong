@@ -53,4 +53,8 @@ public class Field implements Drawable {
         return this.size.getWidth();
     }
 
+    public int getHeight() {
+        return this.size.getHeight();
+    }
+
 }
