@@ -77,7 +77,8 @@ public class Game extends BasicGame {
         Player player1 = new Player(bottomPaddle, field, new Keymap(arrowMap));
         Player player2 = new Player(topPaddle, field, new Keymap(wasdMap));
         container.getInput().addKeyListener(new PaddleKeyListener(this, player1, player2));
-        this.ball = new Ball(new Position(container.getWidth() / 2, container.getHeight() / 2));
+        //        this.ball = new Ball(new Position(container.getWidth() / 2, container.getHeight() / 2));
+        this.ball = new Ball(bottomPaddle.ballOnTop());
     }
 
     @Override
@@ -100,7 +101,7 @@ public class Game extends BasicGame {
           ball.bounceHorizontally();
         }
     }
-
+    
     public void shutdown() {
         this.shutdown = true;
     }

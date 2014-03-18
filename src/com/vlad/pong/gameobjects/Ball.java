@@ -8,13 +8,13 @@ import com.vlad.pong.geometry.Velocity;
 
 public class Ball implements Drawable {
 
-    private static final int RADIUS = 15;
+    public static final int RADIUS = 15;
     private Position position;
     private Velocity velocity;
 
     public Ball(Position position) {
         this.position = position;
-        this.velocity = new Velocity(2, 2);
+        this.velocity = new Velocity(2, -2);
     }
 
     public void moveTo(Position position) {

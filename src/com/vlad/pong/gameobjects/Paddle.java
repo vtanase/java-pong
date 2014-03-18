@@ -39,4 +39,16 @@ public class Paddle implements Drawable {
         this.position = position;
     }
 
+    public Position ballOnTop() {
+        int ballX = this.position.getDeltaX() + this.size.getWidth() / 2;
+        int ballY = this.position.getDeltaY() - Ball.RADIUS;
+        return new Position(ballX, ballY);
+    }
+
+    public Position ballOnBottom() {
+        int ballX = this.position.getDeltaX() + this.size.getWidth() / 2;
+        int ballY = this.position.getDeltaY() + this.size.getHeight() + Ball.RADIUS;
+        return new Position(ballX, ballY);
+    }
+
 }
