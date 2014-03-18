@@ -17,6 +17,7 @@ import com.vlad.pong.gameobjects.Ball;
 import com.vlad.pong.gameobjects.Field;
 import com.vlad.pong.gameobjects.Paddle;
 import com.vlad.pong.gameobjects.Player;
+import com.vlad.pong.geometry.Direction;
 import com.vlad.pong.geometry.Position;
 import com.vlad.pong.geometry.Size;
 import com.vlad.pong.input.Keymap;
@@ -78,7 +79,7 @@ public class Game extends BasicGame {
         Player player2 = new Player(topPaddle, field, new Keymap(wasdMap));
         container.getInput().addKeyListener(new PaddleKeyListener(this, player1, player2));
         //        this.ball = new Ball(new Position(container.getWidth() / 2, container.getHeight() / 2));
-        this.ball = new Ball(bottomPaddle.ballOnTop());
+        this.ball = new Ball(bottomPaddle.ballOnTop(), Direction.UP);
     }
 
     @Override
@@ -90,9 +91,11 @@ public class Game extends BasicGame {
         ball.moveTo(newBallPosition);
         if (ball.hitsBottom(field)) {
           // score 1 for player 2
+            this.ball = new Ball(bottomPaddle.ballOnTop(), Direction.UP);
         }
         if (ball.hitsTop(field)) {
           // score 1 for player 1
+            this.ball = new Ball(topPaddle.ballOnBottom(), Direction.DOWN);
         }
         if (ball.hitsPaddle(bottomPaddle) || ball.hitsPaddle(topPaddle)) {
           ball.bounceVertically();

@@ -3,6 +3,7 @@ package com.vlad.pong.gameobjects;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
+import com.vlad.pong.geometry.Direction;
 import com.vlad.pong.geometry.Position;
 import com.vlad.pong.geometry.Velocity;
 
@@ -12,9 +13,13 @@ public class Ball implements Drawable {
     private Position position;
     private Velocity velocity;
 
-    public Ball(Position position) {
+    public Ball(Position position, Direction direction) {
         this.position = position;
-        this.velocity = new Velocity(2, -2);
+        if (direction == Direction.UP) {
+          this.velocity = new Velocity(2, -2);
+        } else {
+          this.velocity = new Velocity(2, 2);
+        }
     }
 
     public void moveTo(Position position) {
